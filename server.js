@@ -39,6 +39,8 @@ const getMessages = locale => {
   return require(`./lang/${locale}.json`);
 };
 
+app.use(compression());
+
 app.prepare().then(() => {
   createServer((req, res) => {
     const accept = accepts(req);
