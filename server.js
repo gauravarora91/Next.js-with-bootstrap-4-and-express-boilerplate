@@ -10,7 +10,6 @@ const { createServer } = require('http');
 const accepts = require('accepts');
 const glob = require('glob');
 const next = require('next');
-const compression = require('compression');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -39,8 +38,6 @@ const getLocaleDataScript = locale => {
 const getMessages = locale => {
   return require(`./lang/${locale}.json`);
 };
-
-app.use(compression());
 
 app.prepare().then(() => {
   createServer((req, res) => {
