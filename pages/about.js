@@ -5,6 +5,7 @@ import withRedux from 'next-redux-wrapper';
 import Page from '../components/Page';
 import stylesheet from '../styles/scss/themes/light/light.scss';
 import Head from 'next/head';
+import Link from 'next/link';
 
 class Counter extends React.Component {
   static getInitialProps({ store, isServer }) {
