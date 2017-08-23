@@ -8942,7 +8942,7 @@ table.dataTable thead .sorting_desc:after {
   background-image: url("../../img/icons/sort_desc.png");
 }
 table.dataTable thead .sorting:after {
-  background-image: url("../../img/icons/sort_both.png");
+  background-image: url("../../static/assets/img/icons/sort_both.png ");
 }
 table.dataTable thead .sorting_asc_disabled:after {
   background-image: url("../../img/icons/sort_asc_disabled.png");

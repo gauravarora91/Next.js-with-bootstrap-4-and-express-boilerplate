@@ -3,13 +3,19 @@
 const IntlPolyfill = require('intl');
 Intl.NumberFormat = IntlPolyfill.NumberFormat;
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
-
+const express = require('express');
 const { readFileSync } = require('fs');
 const { basename } = require('path');
 const { createServer } = require('http');
 const accepts = require('accepts');
 const glob = require('glob');
 const next = require('next');
+
+const bodyParser = require('body-parser');
+const cookie = require('react-cookie');
+const cookieParser = require('cookie-parser');
+//const isomorphicCookie = require('isomorphic-cookie');
+//const Cookies = require('universal-cookie');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -40,15 +46,28 @@ const getMessages = locale => {
 };
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    const accept = accepts(req);
-    const locale = accept.language(dev ? ['en', 'fr'] : languages);
-    req.locale = locale;
-    req.localeDataScript = getLocaleDataScript(locale);
-    req.messages = dev ? {} : getMessages(locale);
-    handle(req, res);
-  }).listen(port, err => {
+  const server = express();
+  server.use(bodyParser.json());
+  server.use(cookieParser());
+  server.use((req, res, next) => {
+    next();
+  });
+  server.get('*', (req, res) => {
+    return handle(req, res);
+  });
+  server.listen(port, err => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
+  // createServer((req, res) => {
+  //   const accept = accepts(req);
+  //   const locale = accept.language(dev ? ['en', 'fr'] : languages);
+  //   req.locale = locale;
+  //   req.localeDataScript = getLocaleDataScript(locale);
+  //   req.messages = dev ? {} : getMessages(locale);
+  //   handle(req, res);
+  // }).listen(port, err => {
+  //   if (err) throw err;
+  //   console.log(`> Ready on http://localhost:${port}`);
+  // });
 });

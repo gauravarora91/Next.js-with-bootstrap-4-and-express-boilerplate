@@ -20,7 +20,7 @@ export default class IntlDocument extends Document {
     return (
       <html>
         <Head />
-        <body className="fixed-header menu-pin">
+        <body className="fixed-header menu-pin box-layout menu-pin">
           <Main />
           <script src={polyfill} />
           <script

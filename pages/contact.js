@@ -1,4 +1,4 @@
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { FormattedMessage, FormattedNumber, defineMessages } from 'react-intl';
 import pageWithIntl from '../components/PageWithIntl';
 
