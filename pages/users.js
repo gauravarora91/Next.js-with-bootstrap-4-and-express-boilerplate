@@ -59,32 +59,29 @@ class Users extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {!isFetching &&
-                          <span>
-                            {users.map((user, key) =>
-                              <tr key={user.id} role="row" className="odd">
-                                <td className="v-align-middle semi-bold">
-                                  {key + 1}
-                                </td>
-                                <td className="v-align-middle">
-                                  {user.email}
-                                </td>
-                                <td className="v-align-middle semi-bold">
-                                  {user.createdAt}
-                                </td>
-                                <td className="v-align-middle semi-bold">
-                                  <div className="btn-group">
-                                    <button type="button" className="btn btn-success">
-                                      <i className="fa fa-pencil" />
-                                    </button>
-                                    <button type="button" className="btn btn-success">
-                                      <i className="fa fa-trash-o" />
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            )}
-                          </span>}
+                        {users.map((user, key) =>
+                          <tr key={key} role="row" className="odd">
+                            <td className="v-align-middle semi-bold">
+                              {key + 1}
+                            </td>
+                            <td className="v-align-middle">
+                              {user.email}
+                            </td>
+                            <td className="v-align-middle semi-bold">
+                              {user.createdAt}
+                            </td>
+                            <td className="v-align-middle semi-bold">
+                              <div className="btn-group">
+                                <button type="button" className="btn btn-success">
+                                  <i className="fa fa-pencil" />
+                                </button>
+                                <button type="button" className="btn btn-success">
+                                  <i className="fa fa-trash-o" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>

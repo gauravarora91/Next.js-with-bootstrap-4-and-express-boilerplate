@@ -53,32 +53,29 @@ class Companies extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {!isFetching &&
-                          <span>
-                            {companies.map((company, key) =>
-                              <tr key={company.id} role="row" className="odd">
-                                <td className="v-align-middle semi-bold">
-                                  {key + 1}
-                                </td>
-                                <td className="v-align-middle">
-                                  {company.name}
-                                </td>
-                                <td className="v-align-middle semi-bold">
-                                  {company.createdAt}
-                                </td>
-                                <td className="v-align-middle semi-bold">
-                                  <div className="btn-group">
-                                    <button type="button" className="btn btn-success">
-                                      <i className="fa fa-pencil" />
-                                    </button>
-                                    <button type="button" className="btn btn-success">
-                                      <i className="fa fa-trash-o" />
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            )}
-                          </span>}
+                        {companies.map((company, key) =>
+                          <tr key={key} role="row" className="odd">
+                            <td className="v-align-middle semi-bold">
+                              {key + 1}
+                            </td>
+                            <td className="v-align-middle">
+                              {company.name}
+                            </td>
+                            <td className="v-align-middle semi-bold">
+                              {company.createdAt}
+                            </td>
+                            <td className="v-align-middle semi-bold">
+                              <div className="btn-group">
+                                <button type="button" className="btn btn-success">
+                                  <i className="fa fa-pencil" />
+                                </button>
+                                <button type="button" className="btn btn-success">
+                                  <i className="fa fa-trash-o" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>
