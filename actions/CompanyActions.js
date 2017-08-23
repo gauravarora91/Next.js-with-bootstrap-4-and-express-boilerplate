@@ -32,8 +32,9 @@ function fetchCompaniesError(message) {
 
 // Calls the API to get a token and
 // dispatches actions along the way
-export function getCompanies() {
-  let domain = 'http://localhost:9000/companies?access_token=' + getToken();
+export function getCompanies(stoken) {
+  let token = stoken ? stoken : getToken();
+  let domain = 'http://localhost:9000/companies?access_token=' + token;
   let config = {
     method: 'GET',
     credentials: 'include',
