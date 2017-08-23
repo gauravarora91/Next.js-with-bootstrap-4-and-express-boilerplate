@@ -6,17 +6,22 @@ import { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { initStore } from '../store';
 import { getCompanies } from '../actions/CompanyActions';
+import { initApp, initAppCompany, initAppSession } from '../actions/AuthActions';
 
 class Companies extends Component {
   static async getInitialProps({ req, store, isServer, pathname, query }) {
     let token = null;
-    if (isServer) token = req.cookies['x-access-token'];
-    const res = await store.dispatch(getCompanies(token));
-    return { token: token };
-  }
-
-  componentDidMount() {
-    const { token } = this.props;
+    let slug = null;
+    if (isServer) {
+      token = req.cookies['x-access-token'];
+      slug = req.headers.host.split('.')[0];
+    } else slug = window.location.host.split('.')[0];
+    const state = store.getState().AuthReducer;
+    if (!state.token) await store.dispatch(initApp(token, slug));
+    if (!state.isCompanyDataFetched) await store.dispatch(initAppCompany(slug));
+    if (!state.isUserDataFetched) await store.dispatch(initAppSession(token));
+    await store.dispatch(getCompanies(token));
+    return {};
   }
 
   render() {
@@ -91,7 +96,8 @@ class Companies extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCompanies: bindActionCreators(getCompanies, dispatch)
+    getCompanies: bindActionCreators(getCompanies, dispatch),
+    initApp: bindActionCreators(initApp, dispatch)
   };
 };
 

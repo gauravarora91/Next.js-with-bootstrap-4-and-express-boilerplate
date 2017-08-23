@@ -6,18 +6,23 @@ import { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { initStore } from '../store';
 import { getUsers } from '../actions/UserActions';
+import { initApp, initAppCompany, initAppSession } from '../actions/AuthActions';
 import { withCookies, Cookies } from 'react-cookie';
 
 class Users extends Component {
   static async getInitialProps({ req, store, isServer, pathname, query }) {
     let token = null;
-    if (isServer) token = req.cookies['x-access-token'];
+    let slug = null;
+    if (isServer) {
+      token = req.cookies['x-access-token'];
+      slug = req.headers.host.split('.')[0];
+    } else slug = window.location.host.split('.')[0];
+    const state = store.getState().AuthReducer;
+    if (!state.token) await store.dispatch(initApp(token, slug));
+    if (!state.isCompanyDataFetched) await store.dispatch(initAppCompany(slug));
+    if (!state.isUserDataFetched) await store.dispatch(initAppSession(token));
     const res = await store.dispatch(getUsers(token));
-    return { token: token };
-  }
-
-  componentDidMount() {
-    const { token } = this.props;
+    return {};
   }
 
   render() {
@@ -97,7 +102,8 @@ class Users extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUsers: bindActionCreators(getUsers, dispatch)
+    getUsers: bindActionCreators(getUsers, dispatch),
+    initApp: bindActionCreators(initApp, dispatch)
   };
 };
 

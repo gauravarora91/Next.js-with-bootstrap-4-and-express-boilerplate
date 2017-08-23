@@ -14,9 +14,7 @@ const TopMenu = ({ AuthReducer }) =>
   <div className="header">
     <div className="container">
       <div className="header-inner">
-        {/* START MOBILE SIDEBAR TOGGLE */}
         <a href="#" className="btn-link toggle-sidebar hidden-lg-up pg pg-menu" data-toggle="sidebar" />
-        {/* END MOBILE SIDEBAR TOGGLE */}
         <div className>
           <div className="brand inline">
             <img
@@ -28,15 +26,8 @@ const TopMenu = ({ AuthReducer }) =>
               height={22}
             />
           </div>
-          {/* END MOBILE SIDEBAR TOGGLE
-          <a href="#" className="search-link hidden-md-down" data-toggle="search">
-            <i className="pg-search" />
-            Type anywhere to <span className="bold">search</span>
-          </a>
-           */}
         </div>
         <div className="d-flex align-items-center">
-          {/* START User Info*/}
           <div className="pull-left p-r-10 fs-14 font-heading hidden-md-down m-l-20">
             <span className="semi-bold">
               {AuthReducer.user.name}
@@ -79,13 +70,6 @@ const TopMenu = ({ AuthReducer }) =>
               </a>
             </div>
           </div>
-          {/* END User Info*/}
-          <a
-            href="#"
-            className="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block"
-            data-toggle="quickview"
-            data-toggle-element="#quickview"
-          />
         </div>
       </div>
     </div>

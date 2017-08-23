@@ -17,7 +17,8 @@ class Layout extends Component {
       children = (
         <div className="container">
           <Sidebar />
-          <div className="page-container">            
+          <div className="page-container">
+            <TopMenu />
             <div className="page-content-wrapper">
               <div className="content">
                 <Breadcrumb page={this.props.page} />

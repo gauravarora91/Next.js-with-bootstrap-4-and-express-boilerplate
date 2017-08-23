@@ -49,9 +49,17 @@ app.prepare().then(() => {
   const server = express();
   server.use(bodyParser.json());
   server.use(cookieParser());
-  server.use((req, res, next) => {
-    next();
-  });
+  server.use(
+    unless(['/login', '/_next', '/static'], (req, res, next) => {
+      const token = req.cookies['x-access-token'];
+      if (!token) {
+        res.redirect('/login');
+      } else {
+        next();
+      }
+    })
+  );
+
   server.get('*', (req, res) => {
     return handle(req, res);
   });
@@ -59,15 +67,21 @@ app.prepare().then(() => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
-  // createServer((req, res) => {
-  //   const accept = accepts(req);
-  //   const locale = accept.language(dev ? ['en', 'fr'] : languages);
-  //   req.locale = locale;
-  //   req.localeDataScript = getLocaleDataScript(locale);
-  //   req.messages = dev ? {} : getMessages(locale);
-  //   handle(req, res);
-  // }).listen(port, err => {
-  //   if (err) throw err;
-  //   console.log(`> Ready on http://localhost:${port}`);
-  // });
 });
+
+function unless(paths, middleware) {
+  return function(req, res, next) {
+    let isHave = false;
+    paths.forEach(path => {
+      if (path === req.path || req.path.includes(path)) {
+        isHave = true;
+        return;
+      }
+    });
+    if (isHave) {
+      return next();
+    } else {
+      return middleware(req, res, next);
+    }
+  };
+}

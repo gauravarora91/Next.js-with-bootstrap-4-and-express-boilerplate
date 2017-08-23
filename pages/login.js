@@ -7,33 +7,38 @@ import { bindActionCreators } from 'redux';
 import { initStore } from '../store';
 import withRedux from 'next-redux-wrapper';
 import Layout from '../components/Layout';
-import { loginUser, logoutUser } from '../actions/AuthActions';
+import { loginUser, logoutUser, initApp, initAppCompany } from '../actions/AuthActions';
 import { isLoggedIn } from '../utils/AuthService';
 
 //import { FormattedMessage, FormattedNumber, defineMessages } from 'react-intl';
 //import pageWithIntl from '../components/PageWithIntl';
 
 class Login extends Component {
+  static async getInitialProps({ req, store, isServer, pathname, query }) {
+    let token = null;
+    let slug = null;
+    if (isServer) {
+      token = req.cookies['x-access-token'];
+      slug = req.headers.host.split('.')[0];
+    } else slug = window.location.host.split('.')[0];
+    const state = store.getState().AuthReducer;
+    if (!state.token) await store.dispatch(initApp(token, slug));
+    if (!state.isCompanyDataFetched) await store.dispatch(initAppCompany(slug));
+    return {};
+  }
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillUnmount() {
-    // clearInterval(this.timer);
-  }
-
-  componentDidMount() {
-    if (isLoggedIn) {
-      //Router.push('/admin');
-    }
-  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.loginUser(this.refs.email.value, this.refs.password.value);
   }
 
   render() {
+    const { company } = this.props;
     return (
       <Layout title="Login">
         <div id="login">
@@ -154,8 +159,7 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => state;
-
+const mapStateToProps = state => state.AuthReducer;
 const mapDispatchToProps = dispatch => {
   return {
     loginUser: bindActionCreators(loginUser, dispatch),
