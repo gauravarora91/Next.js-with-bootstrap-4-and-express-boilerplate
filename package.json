@@ -22,7 +22,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "jsonwebtoken": "^7.4.3",
     "jwt-decode": "^2.2.0",
-    "next": "latest",
+    "next": "^3.0.6",
     "next-cookies": "^1.0.1",
     "next-redux-wrapper": "^1.0.0",
     "node-sass": "^4.4.0",

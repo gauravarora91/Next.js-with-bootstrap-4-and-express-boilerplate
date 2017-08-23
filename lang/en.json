@@ -1,1 +1,4 @@
-{}
+{
+  "about": "An example app integrating React Intl with Next.js",
+  "greeting": "Hello, World!"
+}
